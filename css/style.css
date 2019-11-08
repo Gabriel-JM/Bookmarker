@@ -1,5 +1,8 @@
 :root {
 	font-size: 12pt;
+	--body-color: #222;
+	--book-header-underline: rgba(50, 50, 50, 0.2);
+	--form-container-bg: #f1f1f1;
 }
 
 * {
@@ -11,7 +14,7 @@
 
 body {
 	font-family: monospace;
-	color: #222;
+	color: var(--body-color);
 }
 
 header, section, footer {
@@ -21,7 +24,7 @@ header, section, footer {
 
 .book-header {
 	padding: 10px 2px;
-	border-bottom: 1px solid rgba(50, 50, 50, 0.2);
+	border-bottom: 1px solid var(--book-header-underline);
 	margin-bottom: 22px;
 }
 
@@ -31,16 +34,16 @@ header, section, footer {
 }
 
 .insert-site-container {
-	background-color: #f1f1f1;
+	background-color: var(--form-container-bg);
 	padding: 20px;
 	margin-bottom: 12px;
 }
 
 .insert-site-header {
 	width: 70%;
-	border-bottom: 1px solid #555;
+	border-bottom: 1px solid var(--book-header-underline);
 	padding-bottom: 10px;
-	margin-bottom: 18px;
+	margin-bottom: 28px;
 }
 
 .insert-site-header > h3 {
@@ -80,4 +83,39 @@ header, section, footer {
 	border-radius: 4px;
 	color: white;
 	padding: 6px;
+	cursor: pointer;
+}
+
+.sites-list-header {
+	font-size: 1.2rem;
+	padding-bottom: 15px;
+	margin-top: 30px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid var(--book-header-underline);
+}
+
+.site-list {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.site-description-container {
+	width: calc(25% - 20px);
+	background-color: var(--form-container-bg);
+	padding: 14px 3%;
+	margin-top: 20px;
+	border-radius: 5px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.site-description-container:not(:nth-child(n+4)) {
+	margin-right: 20px;
+}
+
+footer {
+	margin-top: 40px;
 }
