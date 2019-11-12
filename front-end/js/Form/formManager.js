@@ -1,7 +1,5 @@
 export default class FormManager {
 
-
-
   constructor(form) {
     this.form = form;
     this.inputs = this.getInputs()
@@ -27,4 +25,5 @@ export default class FormManager {
 
     return inputValues
   }
+  
 }
