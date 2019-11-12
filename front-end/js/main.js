@@ -12,27 +12,17 @@ document.querySelector('.insert-site-form').addEventListener('submit', event => 
 		return formValidator.verifyAll({ maxLength: 80, disabled: false }, input)
 	})
 
-	if(formValidation) {
-		localStorage.setItem('bookMaker', JSON.stringify(formValues.elements));
-		console.log(localStorage)
+	if (formValidation) {
+		fetch('http://localhost:3100', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(formValues.elements)
+		})
+			.then(res => res.json())
+			.then(data => console.log(data))
+			.catch(err => console.log(err))
+
 	}
 })
-
-function call() {
-	fetch('http://localhost:3100/', {
-		method: 'GET',
-		headers: {
-			'Content-Type':'application/json'
-		},
-		mode: 'no-cors'
-	}).then(res => {
-		if(!res.ok) {
-			throw Error(res.statusText)
-		}
-
-		return res.json()
-	})
-	.catch(err => console.log(err))
-}
-
-call()

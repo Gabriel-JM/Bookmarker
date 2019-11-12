@@ -1,12 +1,40 @@
-const http = require('http')
+const express = require('express')
+const cors = require('cors')
+const fs = require('fs')
+
 const port = process.env.port || 3100
+const filePath = './files/bookMarker.json'
 
-function onRequest(req, res) {
-    // res.setHeader('Acess-Control-Allow-Origin', '*')
-    res.writeHead(200, { 'Content-Type':'application/json' })
-    res.end(JSON.stringify({message: 'Hello'}))
-}
+const app = express()
 
-const server = http.createServer(onRequest)
+app.use(express.json())
+app.use(cors())
 
-server.listen(port, () => console.log('Server on...'))
+app.get('/', (req, res) => {
+    let file = ''
+
+    fs.readFile(filePath, (err, data) => {
+        if (err) throw err
+        file = data
+        res.send(file)
+    })
+})
+
+app.post('/', (req, res) => {
+    const content = fs.readFileSync(filePath)
+    let bookMarkerArray = JSON.parse(content.toString())
+
+    bookMarkerArray = [
+        ...bookMarkerArray,
+        req.body
+    ]
+
+    const bookMarkers = JSON.stringify(bookMarkerArray)
+
+    fs.writeFile(filePath, bookMarkers, err => {
+        if (err) throw err
+        res.send(req.body)
+    })
+})
+
+app.listen(port)

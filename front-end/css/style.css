@@ -115,6 +115,7 @@ header, section, footer {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	flex-wrap: wrap;
 }
 
 .site-description-container:nth-child(3n+4) {
