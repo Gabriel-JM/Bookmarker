@@ -1,8 +1,7 @@
 class Bookmarker {
 
-	id = null
-
 	constructor(sitename, siteurl) {
+		this.id = null
 		this.siteName = sitename
 		this.siteUrl = siteurl
 	}
