@@ -105,13 +105,14 @@ header, section, footer {
 }
 
 .site-description-container {
-	width: calc(33.33% - 20px);
+	min-width: calc(33.33% - 20px);
 	background-color: var(--form-container-bg);
 	padding: 14px 15px;
 	margin: 0 10px;
 	margin-top: 10px;
 	border-radius: 5px;
 	border: 1px solid #ddd;
+	flex-shrink: 1;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
