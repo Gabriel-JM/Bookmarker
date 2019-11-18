@@ -12,6 +12,16 @@ class BookmarkerController {
 	    return JSON.parse(fileContent)
 	}
 
+	getOne(id) {
+		const bookmarkers = this.getAll()
+
+		const theOne = bookmarkers.find(bookmarker => {
+			return bookmarker.id === Number(id)
+		})
+
+		return theOne
+	}
+
 	postOne(bookmarker) {
 		const fileContent = this.getAll()
 	    let bookMarkerArray = fileContent
@@ -44,6 +54,18 @@ class BookmarkerController {
 		fs.writeFileSync(this.filePath, bookmarkers)
 
 		return this.getAll()
+	}
+
+	deleteOne(id) {
+		const bookmarkerArray = this.getAll()
+
+		const newBookmarkerArray = bookmarkerArray.filter(bookmarker => {
+			return bookmarker.id !== Number(id)
+		})
+
+		this.rePostAll(newBookmarkerArray)
+
+		return { ok: true }
 	}
 }
 

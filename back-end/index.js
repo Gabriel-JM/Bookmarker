@@ -4,7 +4,7 @@ const BookmarkerController = require('./bookmarker/BookmarkerController')
 const Bookmarker = require('./bookmarker/Bookmarker')
 
 const port = process.env.port || 3100
-const bookmarkerController = new BookmarkerController('./files/bookMarker.json')
+const bookmarkerController = new BookmarkerController('./files/bookmarkerList.json')
 
 const app = express()
 
@@ -13,6 +13,12 @@ app.use(cors())
 
 app.get('/', (req, res) => {
     res.send(bookmarkerController.getAll())
+})
+
+app.get('/:id', (req, res) => {
+	const { id } = req.params
+
+	res.send(bookmarkerController.getOne(id))
 })
 
 app.post('/', (req, res) => {
@@ -24,6 +30,12 @@ app.post('/', (req, res) => {
 
 app.put('/', (req, res) => {
 	res.send(bookmarkerController.putOne(req.body))
+})
+
+app.delete('/:id', (req, res) => {
+	const { id } = req.params
+
+	res.send(bookmarkerController.deleteOne(id))
 })
 
 app.listen(port, () => console.log('Server on!'))
