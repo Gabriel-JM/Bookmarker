@@ -16,10 +16,10 @@ class BookmarkerController {
 		const bookmarkers = this.getAll()
 
 		const theOne = bookmarkers.find(bookmarker => {
-			return bookmarker.id === Number(id)
+			return bookmarker.id == id
 		})
 
-		return theOne
+		return theOne || this.returnMessage('Not found!')
 	}
 
 	postOne(bookmarker) {
@@ -39,13 +39,17 @@ class BookmarkerController {
 		const bookmarkerArray = this.getAll()
 
 		const bookmarker = bookmarkerArray.find(bookmarker => {
-			return bookmarker.id === id
+			return bookmarker.id == id
 		})
 
-		bookmarker.siteName = siteName
-		bookmarker.siteUrl = siteUrl
+		if(bookmarker) {
+			bookmarker.siteName = siteName
+			bookmarker.siteUrl = siteUrl
 
-		return this.rePostAll(bookmarkerArray)
+			return bookmarker
+		}
+
+		return this.returnMessage('Id not found!')
 	}
 
 	rePostAll(bookmarkersArray) {
@@ -59,13 +63,27 @@ class BookmarkerController {
 	deleteOne(id) {
 		const bookmarkerArray = this.getAll()
 
+		const bookmarkerExists = bookmarkerArray.some(bookmarker => {
+			return bookmarker.id == id
+		})
+
 		const newBookmarkerArray = bookmarkerArray.filter(bookmarker => {
-			return bookmarker.id !== Number(id)
+			return bookmarker.id != id
 		})
 
 		this.rePostAll(newBookmarkerArray)
 
-		return { ok: true }
+		if(bookmarkerExists) {
+			return this.returnMessage('Successful delete!')
+		} else {
+			return this.returnMessage('Not found!')
+		}
+	}
+
+	returnMessage(text) {
+		return {
+			message: text
+		}
 	}
 }
 

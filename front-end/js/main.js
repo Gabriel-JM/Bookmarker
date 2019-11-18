@@ -1,14 +1,16 @@
 import FormManager from './Form/formManager.js'
 import FormValidator from './Form/formValidator.js'
+import HttpRequest from './HttpRequests/HttpRequest.js'
 
 const formValidator = new FormValidator()
+const defaultUrl = 'http://localhost:3100'
 
 // Event: Form submit
 document.querySelector('.insert-site-form').addEventListener('submit', event => {
 	event.preventDefault()
 
-	const formValues = new FormManager(event.target)
-	const allFormsValidation = formValidator.verifyAll({ maxLength: 80, disabled: false }, formValues.inputs)
+	const formManager = new FormManager(event.target)
+	const allFormsValidation = formValidator.verifyAll({ maxLength: 80, disabled: false }, formManager.inputs)
 
 	if (allFormsValidation) {
 		// fetch('http://localhost:3100', {
@@ -22,7 +24,9 @@ document.querySelector('.insert-site-form').addEventListener('submit', event => 
 		// 	.then(data => console.log(data))
 		// 	.catch(err => console.log(err))
 
-		console.log('esta ok')
+		const http = new HttpRequest()
+
+		http.get(defaultUrl)
 
 	}
 })
