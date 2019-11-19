@@ -7,9 +7,9 @@ class BookmarkerController {
 	}
 
 	getAll() {
-	 	const fileContent = fs.readFileSync(this.filePath)
+		const fileContent = fs.readFileSync(this.filePath)
 
-	    return JSON.parse(fileContent)
+		return JSON.parse(fileContent)
 	}
 
 	getOne(id) {
@@ -24,14 +24,14 @@ class BookmarkerController {
 
 	postOne(bookmarker) {
 		const fileContent = this.getAll()
-	    let bookMarkerArray = fileContent
+		let bookMarkerArray = fileContent
 
-	    bookMarkerArray = [...bookMarkerArray, bookmarker]
-	    const bookMarkers = JSON.stringify(bookMarkerArray)
+		bookMarkerArray = [...bookMarkerArray, bookmarker]
+		const bookMarkers = JSON.stringify(bookMarkerArray)
 
-	    fs.writeFileSync(this.filePath, bookMarkers)
-	    
-	    return bookmarker
+		fs.writeFileSync(this.filePath, bookMarkers)
+
+		return bookmarker
 	}
 
 	putOne(bookmarkerToAlter) {
@@ -42,7 +42,7 @@ class BookmarkerController {
 			return bookmarker.id == id
 		})
 
-		if(bookmarker) {
+		if (bookmarker) {
 			bookmarker.siteName = siteName
 			bookmarker.siteUrl = siteUrl
 
@@ -73,7 +73,7 @@ class BookmarkerController {
 
 		this.rePostAll(newBookmarkerArray)
 
-		if(bookmarkerExists) {
+		if (bookmarkerExists) {
 			return this.returnMessage('Successful delete!')
 		} else {
 			return this.returnMessage('Not found!')

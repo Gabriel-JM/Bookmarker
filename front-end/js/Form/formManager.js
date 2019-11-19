@@ -1,3 +1,5 @@
+"use strict"
+
 export default class FormManager {
 
   constructor(form) {
@@ -25,5 +27,5 @@ export default class FormManager {
 
     return inputValues
   }
-  
+
 }

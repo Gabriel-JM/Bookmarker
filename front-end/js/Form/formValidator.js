@@ -1,3 +1,5 @@
+"use strict"
+
 export default class FormValidator {
 
   verifyAll(validationObject, inputs) {
@@ -7,7 +9,7 @@ export default class FormValidator {
         return input[attribute] === validationObject[attribute]
       })
     })
-    
+
   }
-  
+
 }
