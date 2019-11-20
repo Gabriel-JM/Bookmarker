@@ -66,7 +66,7 @@ header, section, footer {
 }
 
 .insert-site-form > input {
-	width: 100% ;
+	width: 100%;
 	margin-top: 8px;
 	margin-bottom: 20px;
 	border: 1px solid #777;
@@ -74,8 +74,20 @@ header, section, footer {
 	border-radius: 4px;
 }
 
+.label1 {
+	grid-area: label1;
+}
+
+.label2 {
+	grid-area: label2;
+}
+
 .insert-site-form > input[name=siteName] {
 	grid-area: input1;
+}
+
+.insert-site-form > input[name=siteUrl] {
+	grid-area: input2;
 }
 
 .insert-site-form > button {
@@ -86,6 +98,7 @@ header, section, footer {
 	border: 0;
 	border-radius: 4px;
 	color: white;
+	font-weight: bold;
 	padding: 6px;
 	cursor: pointer;
 }
@@ -106,26 +119,21 @@ header, section, footer {
 }
 
 .site-description-container {
-	min-width: calc(33.33% - 20px);
+	width: calc(33.33% - 10px);
 	background-color: var(--form-container-bg);
 	padding: 14px 15px;
-	margin: 0 10px;
+	margin: 0 5px;
 	margin-top: 10px;
 	border-radius: 5px;
 	border: 1px solid #ddd;
-	flex-shrink: 1;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	flex-wrap: wrap;
 }
 
-.site-description-container:nth-child(3n+4) {
-	margin-top: 20px;
-}
-
 .site-description-container > a {
-	font-size: 1.2rem;
+	font-size: 1.05rem;
 	text-decoration: none;
 	color: #222;
 }
@@ -135,7 +143,7 @@ header, section, footer {
 }
 
 .site-description-actions {
-	margin-left: 8px;
+	margin-left: 0px;
 }
 
 .site-description-actions > button {
@@ -157,4 +165,42 @@ header, section, footer {
 
 footer {
 	margin-top: 40px;
+}
+
+@media screen and (max-width: 1300px) {
+	.site-description-container {
+		width: calc(50% - 20px);
+	}
+}
+
+@media screen and (max-width: 768px) {
+	header, section, footer {
+		width: 90vw;
+	}
+}
+
+@media screen and (max-width: 425px) {
+	.insert-site-header,
+	.insert-site-form,
+	.site-description-container {
+		width: 100%;
+	}
+
+	.site-description-container {
+		margin: 7px 0px;
+		padding: 10px;
+	}
+
+	.insert-site-header > h3 {
+		font-size: 1.25rem;
+	}
+
+	.insert-site-form {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.insert-site-form > button {
+		width: 100%;
+	}
 }

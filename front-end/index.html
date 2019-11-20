@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="bookmark-icon.ico">
     <title>Bookmarker</title>
 </head>
 
@@ -16,14 +17,14 @@
 
     <section class="insert-site-container">
         <header class="insert-site-header">
-            <h3>BookMark Your Favorite Sites</h3>
+            <h3>Bookmark Your Favorite Sites</h3>
         </header>
 
         <form class="insert-site-form">
-            <label for="siteName">Site Name</label>
+            <label class="label1" for="siteName">Site Name</label>
             <input name="siteName" placeholder="Website Name" maxlength="80">
             <label for="siteUrl">Site URL</label>
-            <input name="siteUrl" placeholder="Website URL" maxlength="80">
+            <input class="label2" name="siteUrl" placeholder="Website URL" maxlength="80">
             <button>Submit</button>
         </form>
     </section>
@@ -32,35 +33,7 @@
         <header class="sites-list-header">
             <h3>Sites List</h3>
         </header>
-        <div class="site-list" sites-list>
-            <div class="site-description-container">
-                <a href="http://google.com" target="_blank" rel="noopener noreferrer">Google</a>
-                <div class="site-description-actions">
-                    <button>Edit</button>
-                    <button>Delete</button>
-                </div>
-            </div>
-            <div class="site-description-container">
-                <a href="http://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
-                <div class="site-description-actions">
-                    <button>Edit</button>
-                    <button>Delete</button>
-                </div>
-            </div>
-            <div class="site-description-container">
-                <a href="http://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
-                <div class="site-description-actions">
-                    <button>Edit</button>
-                    <button>Delete</button>
-                </div>
-            </div>
-            <div class="site-description-container">
-                <a href="http://unievangelica.edu.br" target="_blank" rel="noopener noreferrer">UniEVANGELICA</a>
-                <div class="site-description-actions">
-                    <button>Edit</button>
-                    <button>Delete</button>
-                </div>
-            </div>
+        <div class="site-list" sites-list></div>
     </section>
 
     <footer>

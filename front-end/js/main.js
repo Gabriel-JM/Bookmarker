@@ -1,20 +1,22 @@
 "use strict"
 
+// Imports
 import FormManager from './Form/formManager.js'
 import FormValidator from './Form/formValidator.js'
 import HttpRequest from './HttpRequests/HttpRequest.js'
+import MainUI from './UI/MainUI.js.js'
 
+// Variables
 const defaultUrl = 'http://localhost:3100'
-
 const http = new HttpRequest()
 const formValidator = new FormValidator()
-
+const mainUI = new MainUI()
 
 // Event: Document Load
 document.addEventListener('DOMContentLoaded', async () => {
 	const result = await http.get(defaultUrl)
 
-	console.log(result)
+	mainUI.showItems(result, '[sites-list]')
 }, true)
 
 // Event: Form submit
