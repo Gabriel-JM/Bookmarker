@@ -12,4 +12,20 @@ export default class FormValidator {
 
   }
 
+  verify(validationObject, input) {
+
+    return Object.keys(validationObject).every(attribute => {
+      return input[attribute] === validationObject[attribute]
+    })
+
+  }
+
+  hasSpace(value) {
+
+    const expression = /^\s*$|\s+(?=[^a-zá-úà-ù])/i
+
+    return RegExp(expression).test(value)
+
+  }
+
 }
