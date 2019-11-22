@@ -19,7 +19,7 @@ class BookmarkerController {
 			return bookmarker.id == id
 		})
 
-		return theOne || this.returnMessage('Not found!')
+		return theOne || this.returnMessage('Not found!', false)
 	}
 
 	postOne(bookmarker) {
@@ -49,7 +49,7 @@ class BookmarkerController {
 			return bookmarker
 		}
 
-		return this.returnMessage('Id not found!')
+		return this.returnMessage('Id not found!', false)
 	}
 
 	rePostAll(bookmarkersArray) {
@@ -74,15 +74,16 @@ class BookmarkerController {
 		this.rePostAll(newBookmarkerArray)
 
 		if (bookmarkerExists) {
-			return this.returnMessage('Successful delete!')
+			return this.returnMessage('Successful delete!', true)
 		} else {
-			return this.returnMessage('Not found!')
+			return this.returnMessage('Not found!', false)
 		}
 	}
 
-	returnMessage(text) {
+	returnMessage(text, approve) {
 		return {
-			message: text
+			message: text,
+			ok: approve
 		}
 	}
 }

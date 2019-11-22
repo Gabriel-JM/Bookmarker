@@ -34,4 +34,21 @@ export default class HttpRequest {
     }
   }
 
+  async delete(urlString) {
+
+    try {
+      const response = await fetch(urlString, {
+        method: 'DELETE'
+      })
+
+      const data = await response.json()
+
+      return data
+      
+    } catch(error) {
+      throw console.log(error)
+    }
+
+  }
+
 }

@@ -20,6 +20,20 @@ export default class FormValidator {
 
   }
 
+  verifyFieldsWithPattern(validationObject, inputs) {
+
+    return Object.keys(validationObject).every(field => {
+      const input = inputs.find(input => input.name === field)
+
+      return Object.keys(validationObject[field]).every(attribute => {
+        const validationField = validationObject[field]
+        
+        return input[attribute] === validationField[attribute]
+      })
+    })
+
+  }
+
   hasSpace(value) {
 
     const expression = /^\s*$|\s+(?=[^a-zá-úà-ù])/i

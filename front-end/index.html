@@ -14,6 +14,8 @@
     <header class="book-header">
         <h1>Bookmarker</h1>
     </header>
+    
+    <div message-field ></div>
 
     <section class="insert-site-container">
         <header class="insert-site-header">
@@ -22,9 +24,11 @@
 
         <form class="insert-site-form">
             <label class="label1" for="siteName">Site Name</label>
-            <input name="siteName" placeholder="Website Name" maxlength="80">
-            <label for="siteUrl">Site URL</label>
-            <input class="label2" name="siteUrl" placeholder="Website URL" maxlength="80">
+            <input name="siteName" placeholder="My Site..." maxlength="30" required="true">
+
+            <label class="label2" for="siteUrl">Site URL</label>
+            <input name="siteUrl" placeholder="mysite.com" maxlength="100" required="true">
+
             <button>Submit</button>
         </form>
     </section>
