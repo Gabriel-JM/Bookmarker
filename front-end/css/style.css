@@ -4,6 +4,8 @@
 	--book-header-underline: rgba(50, 50, 50, 0.2);
 	--form-container-bg: #f1f1f1;
 	--body-bg: #fcfcfc;
+	--success: #3a5;
+	--error: #c44;
 }
 
 * {
@@ -33,6 +35,43 @@ header, section, footer {
 .book-header > h1 {
 	font-size: 2.1rem;
 	font-weight: normal;
+}
+
+.message-field {
+	width: 250px;
+	position: fixed;
+	top: 0;
+	right: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.app-message {
+	width: 100%;
+	margin: 10px 10px 0px 0px;
+	color: white;
+	padding: 17px;
+	border-radius: 5px;
+	box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.4);
+	transition: all 0.3s ease;
+	animation: show 2.7s ease-out;
+	animation-fill-mode: backwards;
+}
+
+.app-message > h4 {
+	font-size: 1.2rem;
+	padding-bottom: 8px;
+	margin-bottom: 8px;
+	border-bottom: 1px solid white;
+}
+
+.success-message {
+	background-color: var(--success);
+}
+
+.error-message {
+	background-color: var(--error);
 }
 
 .insert-site-container {
@@ -165,6 +204,16 @@ header, section, footer {
 
 footer {
 	margin-top: 40px;
+	margin-bottom: 20px;
+}
+
+@keyframes show {
+	0%, 100% {
+		transform: translateX(120%);
+	}
+	20%, 80% {
+		transform: translateX(0px);
+	}
 }
 
 @media screen and (max-width: 1300px) {

@@ -20,10 +20,21 @@ export default class Messager {
         div.className = `app-message ${type.toLowerCase()}-message`
 
         div.innerHTML = `
-            <h4>${type}</h4>
-            <p>${message}</p>`
+            <h4>${type == 'Error'? 'Ops...' : type}</h4>
+            <p>${message}</p>
+        `
 
         this.messageField.appendChild(div)
+
+        this.addMessageVanishing()
+    }
+
+    addMessageVanishing() {
+        document.querySelectorAll('.app-message').forEach(message => {
+            message.addEventListener('animationend', () => {
+                message.remove()
+            })
+        })
     }
 
 }

@@ -14,6 +14,19 @@ const formValidator = new FormValidator()
 const mainUI = new MainUI()
 const messager = new Messager()
 
+const formPattern = {
+	siteName: {
+		maxLength: 30,
+		disabled: false,
+		required: true
+	},
+	siteUrl: {
+		maxLength: 100,
+		disabled: false,
+		required: true
+	}
+}
+
 // Event: Document Load
 document.addEventListener('DOMContentLoaded', async () => {
 	const result = await http.get(defaultUrl)
@@ -29,19 +42,6 @@ document.querySelector('.insert-site-form').addEventListener('submit', async eve
 
 	const formManager = new FormManager(event.target)
 
-	const formPattern = {
-		siteName: {
-			maxLength: 30,
-			disabled: false,
-			required: true
-		},
-		siteUrl: {
-			maxLength: 100,
-			disabled: false,
-			required: true
-		}
-	}
-
 	const allFieldsValidation = formValidator.verifyFieldsWithPattern(formPattern, formManager.inputs)
 
 	const spaceValidation = formManager.inputs.every(input => {
@@ -51,12 +51,15 @@ document.querySelector('.insert-site-form').addEventListener('submit', async eve
 	if (allFieldsValidation && spaceValidation) {
 		const result = await http.post(defaultUrl, formManager.elements)
 
+		messager.showSuccess('Added new item!')
 		mainUI.addNewItem(result)
 
         addDeleting()
 	} else {
-		messager.showError('Ops...')
+		messager.showError('Fill out the fields!')
 	}
+
+	event.target.reset()
 
 }, true)
 
