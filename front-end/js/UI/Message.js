@@ -20,8 +20,11 @@ export default class Messager {
         div.className = `app-message ${type.toLowerCase()}-message`
 
         div.innerHTML = `
-            <h4>${type == 'Error'? 'Ops...' : type}</h4>
-            <p>${message}</p>
+            <p>${type == 'Error' ? '&#10007' : '&#10003'}</p>
+            <div>
+                <h4>${type == 'Error' ? 'Ops...' : type}</h4>
+                <p>${message}</p>
+            </div>
         `
 
         this.messageField.appendChild(div)

@@ -45,4 +45,35 @@ export default class MainUI {
         this.showItem(newItem, '[sites-list]')
     }
 
+    addNoItemsMessage(query) {
+        const container = document.querySelector(query)
+
+        const div = document.createElement('div')
+        div.className = 'no-item-message'
+
+        div.innerHTML = '<p>No item available.</p>'
+
+        container.appendChild(div)
+    }
+
+    removeNoItemsMessage() {
+        const message = document.querySelector('.no-item-message')
+
+        if (message) message.remove()
+    }
+
+    fillInputFields(item, form) {
+        const insertForm = document.querySelector(form)
+
+        Object.keys(item).forEach(attribute => {
+            const formField = insertForm[attribute]
+
+            if (attribute !== 'id') {
+                formField.value = item[attribute]
+            } else {
+                insertForm.setAttribute('keyid', item[attribute])
+            }
+        })
+    }
+
 }

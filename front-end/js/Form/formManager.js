@@ -25,6 +25,8 @@ export default class FormManager {
       })
     }
 
+    inputValues.id = this.form.getAttribute('keyid')
+
     return inputValues
   }
 
