@@ -40,4 +40,21 @@ export default class Messager {
         })
     }
 
+    addNoItemsMessage(query) {
+        const container = document.querySelector(query)
+
+        const div = document.createElement('div')
+        div.className = 'no-item-message'
+
+        div.innerHTML = '<p>No item available.</p>'
+
+        container.appendChild(div)
+    }
+
+    removeNoItemsMessage() {
+        const message = document.querySelector('.no-item-message')
+
+        if (message) message.remove()
+    }
+
 }

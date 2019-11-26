@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 		addButtonsEvents()
 	} else {
-		isSitesListEmpty()
+		mainUI.isSitesListEmpty(sitesListDiv)
 	}
 }, true)
 
@@ -54,73 +54,57 @@ document.querySelector('.insert-site-form').addEventListener('submit', async eve
 }, true)
 
 function addButtonsEvents() {
-	document.querySelectorAll('[btn-delete]').forEach(btn => {
-		btn.addEventListener('click', async event => {
-			const itemDiv = event.target.parentElement.parentElement
-			const itemId = itemDiv.getAttribute('keyid')
 
-			const result = await http.delete(`${defaultUrl}/${itemId}`)
+	const buttonsTypes = ['delete', 'edit']
 
-			if (result.ok) {
-				itemDiv.remove()
-				messager.showSuccess(result.message)
-				isSitesListEmpty()
-			}
+	buttonsTypes.forEach(button => {
+
+		document.querySelectorAll(`[btn-${button}]`).forEach(btn => {
+			btn.addEventListener('click', async event => {
+				const itemDiv = event.target.parentElement.parentElement
+				const itemId = itemDiv.getAttribute('keyid')
+	
+				if(button === 'delete') {
+					doDelete(itemDiv, itemId)
+				} else {
+					doEdit(itemId)
+				}
+			})
 		})
-	})
 
-	document.querySelectorAll('[btn-edit]').forEach(btn => {
-		btn.addEventListener('click', async event => {
-			const itemDiv = event.target.parentElement.parentElement
-			const itemId = itemDiv.getAttribute('keyid')
-
-			const theOne = await http.get(`${defaultUrl}/${itemId}`)
-
-			if (theOne && theOne.id) {
-				mainUI.fillInputFields(theOne, '.insert-site-form')
-			} else {
-				mainUI.showError('Item not found!')
-			}
-		})
 	})
 }
 
-function isSitesListEmpty() {
-	const sitesList = document.querySelector(sitesListDiv)
+function doEdit(itemId) {
+	const theOne = await http.get(`${defaultUrl}/${itemId}`)
 
-	if (!sitesList.innerHTML) {
-		mainUI.addNoItemsMessage(sitesListDiv)
+	if (theOne && theOne.id) {
+		mainUI.fillInputFields(theOne, '.insert-site-form')
 	} else {
-		mainUI.removeNoItemsMessage()
+		mainUI.showError('Item not found!')
 	}
 }
 
-function formValidation(form) {
+function doDelete(itemDiv, itemId) {
+	const result = await http.delete(`${defaultUrl}/${itemId}`)
 
-	const allFieldsValidation = formValidator.verifyFieldsWithPattern(
-		formPattern, form.inputs
-	)
-
-	const spaceValidation = form.inputs.every(input => {
-		return !formValidator.hasSpace(input.value)
-	})
-
-	const urlValidation = true
-
-	return allFieldsValidation && spaceValidation && urlValidation
-
+	if (result.ok) {
+		itemDiv.remove()
+		messager.showSuccess(result.message)
+		mainUI.isSitesListEmpty(sitesListDiv)
+	}
 }
 
 async function submitingFormValues(form) {
 
-	if (formValidation(form)) {
+	if (formValidator.validateForm(form)) {
 		const result = await http.post(defaultUrl, form.elements)
 
 		messager.showSuccess('Added new item!')
 		mainUI.addNewItem(result)
 
 		addButtonsEvents()
-		isSitesListEmpty()
+		mainUI.isSitesListEmpty(sitesListDiv)
 	}
 	else {
 		messager.showError('Fill in the fields!')

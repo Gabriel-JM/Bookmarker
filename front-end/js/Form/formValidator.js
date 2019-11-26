@@ -42,4 +42,20 @@ export default class FormValidator {
 
   }
 
+  validateForm(form) {
+
+    const allFieldsValidation = formValidator.verifyFieldsWithPattern(
+      formPattern, form.inputs
+    )
+  
+    const spaceValidation = form.inputs.every(input => {
+      return !formValidator.hasSpace(input.value)
+    })
+  
+    const urlValidation = true
+  
+    return allFieldsValidation && spaceValidation && urlValidation
+  
+  }
+
 }

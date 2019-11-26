@@ -1,6 +1,12 @@
 "use strict"
 
+import Messager from "./Message"
+
 export default class MainUI {
+
+    constructor() {
+        this.messager = new Messager()
+    }
 
     showItems(itemsArray, elementQuery) {
         const containerElement = document.querySelector(elementQuery)
@@ -45,23 +51,6 @@ export default class MainUI {
         this.showItem(newItem, '[sites-list]')
     }
 
-    addNoItemsMessage(query) {
-        const container = document.querySelector(query)
-
-        const div = document.createElement('div')
-        div.className = 'no-item-message'
-
-        div.innerHTML = '<p>No item available.</p>'
-
-        container.appendChild(div)
-    }
-
-    removeNoItemsMessage() {
-        const message = document.querySelector('.no-item-message')
-
-        if (message) message.remove()
-    }
-
     fillInputFields(item, form) {
         const insertForm = document.querySelector(form)
 
@@ -74,6 +63,16 @@ export default class MainUI {
                 insertForm.setAttribute('keyid', item[attribute])
             }
         })
+    }
+
+    isSitesListEmpty(sitesListDiv) {
+        const sitesList = document.querySelector(sitesListDiv)
+    
+        if (!sitesList.innerHTML) {
+            this.messager.addNoItemsMessage(sitesListDiv)
+        } else {
+            this.messager.removeNoItemsMessage()
+        }
     }
 
 }
