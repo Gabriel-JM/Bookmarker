@@ -35,7 +35,7 @@ export default class Messager {
     addMessageVanishing() {
         document.querySelectorAll('.app-message').forEach(message => {
             message.addEventListener('animationend', () => {
-                message.remove()
+                setInterval(() => message.remove(), 1000)
             })
         })
     }

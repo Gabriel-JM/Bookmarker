@@ -5,7 +5,7 @@ import FormManager from './Form/formManager.js'
 import FormValidator from './Form/formValidator.js'
 import HttpRequest from './HttpRequests/HttpRequest.js'
 import MainUI from './UI/MainUI.js'
-import Messager from './UI/Message.js'
+import Messager from './UI/Messager.js'
 
 // Constants
 const defaultUrl = 'http://localhost:3100'
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 	const result = await http.get(defaultUrl)
 
 	if (result.length) {
-		mainUI.showItems(result, sitesListDiv)
+		mainUI.showItems(sitesListDiv, result)
 
 		addButtonsEvents()
 	} else {
@@ -46,10 +46,14 @@ document.querySelector('.insert-site-form').addEventListener('submit', async eve
 	event.preventDefault()
 
 	const formManager = new FormManager(event.target)
+	const { id } = formManager.elements
 
-	submitingFormValues(formManager)
+	const isNewItem = (id == 'null')
+
+	submitingFormValues(formManager, isNewItem)
 
 	event.target.reset()
+	event.target.setAttribute('keyid', null)
 
 }, true)
 
@@ -63,8 +67,8 @@ function addButtonsEvents() {
 			btn.addEventListener('click', async event => {
 				const itemDiv = event.target.parentElement.parentElement
 				const itemId = itemDiv.getAttribute('keyid')
-	
-				if(button === 'delete') {
+
+				if (button === 'delete') {
 					doDelete(itemDiv, itemId)
 				} else {
 					doEdit(itemId)
@@ -75,7 +79,7 @@ function addButtonsEvents() {
 	})
 }
 
-function doEdit(itemId) {
+async function doEdit(itemId) {
 	const theOne = await http.get(`${defaultUrl}/${itemId}`)
 
 	if (theOne && theOne.id) {
@@ -85,7 +89,7 @@ function doEdit(itemId) {
 	}
 }
 
-function doDelete(itemDiv, itemId) {
+async function doDelete(itemDiv, itemId) {
 	const result = await http.delete(`${defaultUrl}/${itemId}`)
 
 	if (result.ok) {
@@ -95,19 +99,31 @@ function doDelete(itemDiv, itemId) {
 	}
 }
 
-async function submitingFormValues(form) {
+async function submitingFormValues(form, isNewItem) {
 
-	if (formValidator.validateForm(form)) {
-		const result = await http.post(defaultUrl, form.elements)
+	formValidator.setFormPattern(formPattern)
 
-		messager.showSuccess('Added new item!')
-		mainUI.addNewItem(result)
+	const validaton = formValidator.validateForm(form)
+
+	if (validaton === 'ok') {
+
+		if (isNewItem) {
+			const result = await http.post(defaultUrl, form.elements)
+
+			messager.showSuccess('Added new item!')
+			mainUI.addNewItem(result)
+		} else {
+			const result = await http.put(defaultUrl, form.elements)
+
+			messager.showSuccess('Item edited!')
+			mainUI.showItems(sitesListDiv, result)
+		}
 
 		addButtonsEvents()
 		mainUI.isSitesListEmpty(sitesListDiv)
 	}
 	else {
-		messager.showError('Fill in the fields!')
+		messager.showError(validaton)
 	}
 
 }

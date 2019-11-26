@@ -20,7 +20,26 @@ export default class HttpRequest {
             const response = await fetch(urlString, {
                 method: 'POST',
                 headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(bodyContent)
+            })
+
+            const data = await response.json()
+
+            return data
+
+        } catch (error) {
+            throw console.log(error)
+        }
+    }
+
+    async put(urlString, bodyContent) {
+        try {
+            const response = await fetch(urlString, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(bodyContent)
             })
@@ -44,8 +63,8 @@ export default class HttpRequest {
             const data = await response.json()
 
             return data
-            
-        } catch(error) {
+
+        } catch (error) {
             throw console.log(error)
         }
 

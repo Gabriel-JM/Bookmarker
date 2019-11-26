@@ -1,6 +1,6 @@
 "use strict"
 
-import Messager from "./Message"
+import Messager from "./Messager.js"
 
 export default class MainUI {
 
@@ -8,12 +8,15 @@ export default class MainUI {
         this.messager = new Messager()
     }
 
-    showItems(itemsArray, elementQuery) {
+    showItems(elementQuery, itemsArray = null) {
+
+        if (itemsArray) this.itemsArray = itemsArray
+
         const containerElement = document.querySelector(elementQuery)
 
         containerElement.innerHTML = ''
 
-        itemsArray.forEach(item => {
+        this.itemsArray.forEach(item => {
             containerElement.appendChild(this.createItemElement(item))
         })
 
@@ -63,11 +66,12 @@ export default class MainUI {
                 insertForm.setAttribute('keyid', item[attribute])
             }
         })
+
     }
 
     isSitesListEmpty(sitesListDiv) {
         const sitesList = document.querySelector(sitesListDiv)
-    
+
         if (!sitesList.innerHTML) {
             this.messager.addNoItemsMessage(sitesListDiv)
         } else {

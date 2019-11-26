@@ -6,6 +6,7 @@ export default class FormManager {
     this.form = form;
     this.inputs = this.getInputs()
     this.elements = this.getInputValues()
+    this.parseUrl()
   }
 
   getInputs() {
@@ -17,7 +18,9 @@ export default class FormManager {
   getInputValues() {
     const inputArray = this.getInputs()
 
-    let inputValues = {}
+    let inputValues = {
+      id: this.form.getAttribute('keyid')
+    }
 
     for (let input of inputArray) {
       Object.assign(inputValues, {
@@ -25,9 +28,14 @@ export default class FormManager {
       })
     }
 
-    inputValues.id = this.form.getAttribute('keyid')
-
     return inputValues
+  }
+
+  parseUrl() {
+    const regex = /[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
+    const { siteUrl } = this.elements
+
+    this.elements.siteUrl = siteUrl.match(regex)
   }
 
 }

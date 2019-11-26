@@ -2,6 +2,10 @@
 
 export default class FormValidator {
 
+  setFormPattern(pattern) {
+    this.formPattern = pattern
+  }
+
   verifyAll(validationObject, inputs) {
 
     return inputs.every(input => {
@@ -27,11 +31,17 @@ export default class FormValidator {
 
       return Object.keys(validationObject[field]).every(attribute => {
         const validationField = validationObject[field]
-        
+
         return input[attribute] === validationField[attribute]
       })
     })
 
+  }
+
+  validateUrl(url) {
+    const regex = /[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
+
+    return RegExp(regex).test(url)
   }
 
   hasSpace(value) {
@@ -44,18 +54,26 @@ export default class FormValidator {
 
   validateForm(form) {
 
-    const allFieldsValidation = formValidator.verifyFieldsWithPattern(
-      formPattern, form.inputs
+    let result = 'ok'
+
+    const allFieldsValidation = this.verifyFieldsWithPattern(
+      this.formPattern, form.inputs
     )
-  
+
     const spaceValidation = form.inputs.every(input => {
-      return !formValidator.hasSpace(input.value)
+      return !this.hasSpace(input.value)
     })
-  
-    const urlValidation = true
-  
-    return allFieldsValidation && spaceValidation && urlValidation
-  
+
+    const urlValidation = this.validateUrl(form.elements.siteUrl)
+
+    if (!urlValidation) result = 'Invalid Url!'
+
+    if (!allFieldsValidation) result = "Don't do that!"
+
+    if (!spaceValidation) result = 'Invalid input!'
+
+    return result
+
   }
 
 }

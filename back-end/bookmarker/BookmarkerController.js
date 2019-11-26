@@ -46,7 +46,7 @@ class BookmarkerController {
 			bookmarker.siteName = siteName
 			bookmarker.siteUrl = siteUrl
 
-			return bookmarker
+			return this.rePostAll(bookmarkerArray)
 		}
 
 		return this.returnMessage('Id not found!', false)
