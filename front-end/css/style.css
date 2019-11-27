@@ -38,8 +38,10 @@ header, section, footer {
 }
 
 .message-field {
-	height: 100%;
 	width: 270px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	position: fixed;
 	top: 0;
 	right: 0;
@@ -57,7 +59,7 @@ header, section, footer {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	animation: show 2.5s ease-out;
+	animation: show 2.7s ease-out;
 	animation-fill-mode: backwards;
 }
 
