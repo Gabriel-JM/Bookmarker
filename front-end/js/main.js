@@ -80,7 +80,7 @@ function addButtonsEvents() {
 }
 
 async function doEdit(itemId) {
-	const theOne = await http.get(`${defaultUrl}/${itemId}`)
+	const theOne = await http.getOne(`${defaultUrl}`, itemId)
 
 	if (theOne && theOne.id) {
 		mainUI.fillInputFields(theOne, '.insert-site-form')
@@ -90,7 +90,7 @@ async function doEdit(itemId) {
 }
 
 async function doDelete(itemDiv, itemId) {
-	const result = await http.delete(`${defaultUrl}/${itemId}`)
+	const result = await http.delete(`${defaultUrl}`, itemId)
 
 	if (result.ok) {
 		itemDiv.remove()

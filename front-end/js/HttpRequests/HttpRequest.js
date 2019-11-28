@@ -15,6 +15,18 @@ export default class HttpRequest {
         }
     }
 
+    async getOne(urlString, id) {
+        try {
+            const response = await fetch(`${urlString}/?id=${id}`)
+
+            const data = await response.json()
+
+            return data
+        } catch (error) {
+            throw console.log(error)
+        }
+    }
+
     async post(urlString, bodyContent) {
         try {
             const response = await fetch(urlString, {
@@ -36,7 +48,8 @@ export default class HttpRequest {
 
     async put(urlString, bodyContent) {
         try {
-            const response = await fetch(urlString, {
+            const { id } = bodyContent
+            const response = await fetch(`${urlString}/?id=${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -53,10 +66,10 @@ export default class HttpRequest {
         }
     }
 
-    async delete(urlString) {
+    async delete(urlString, id) {
 
         try {
-            const response = await fetch(urlString, {
+            const response = await fetch(`${urlString}/?id=${id}`, {
                 method: 'DELETE'
             })
 
