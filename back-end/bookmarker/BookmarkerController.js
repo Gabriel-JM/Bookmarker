@@ -61,19 +61,17 @@ class BookmarkerController {
 	}
 
 	deleteOne(id) {
-		const bookmarkerArray = this.getAll()
+		const bookmarkArray = JSON.parse(this.getAll())
 
-		const bookmarkerExists = bookmarkerArray.some(bookmarker => {
-			return bookmarker.id == id
+		const bookmarkExists = bookmarkArray.some(bookmark => bookmark.id == id)
+
+		const newBookmarkArray = bookmarkArray.filter(bookmark => {
+			return bookmark.id != id
 		})
 
-		const newBookmarkerArray = bookmarkerArray.filter(bookmarker => {
-			return bookmarker.id != id
-		})
+		this.rePostAll(newBookmarkArray)
 
-		this.rePostAll(newBookmarkerArray)
-
-		if (bookmarkerExists) {
+		if (bookmarkExists) {
 			return this.returnMessage('Successful delete!', true)
 		} else {
 			return this.returnMessage('Not found!', false)
