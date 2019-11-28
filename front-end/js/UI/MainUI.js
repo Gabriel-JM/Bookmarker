@@ -16,9 +16,11 @@ export default class MainUI {
 
         containerElement.innerHTML = ''
 
-        this.itemsArray.forEach(item => {
-            containerElement.appendChild(this.createItemElement(item))
-        })
+        if (this.itemsArray) {
+            this.itemsArray.forEach(item => {
+                containerElement.appendChild(this.createItemElement(item))
+            })
+        }
 
     }
 

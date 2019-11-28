@@ -18,8 +18,10 @@ export default class FormManager {
   getInputValues() {
     const inputArray = this.getInputs()
 
+    const keyid = this.form.getAttribute('keyid')
+
     let inputValues = {
-      id: this.form.getAttribute('keyid')
+      id: keyid == 'null' ? null : keyid
     }
 
     for (let input of inputArray) {

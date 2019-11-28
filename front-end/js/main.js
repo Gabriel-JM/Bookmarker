@@ -28,6 +28,8 @@ const formPattern = {
 	}
 }
 
+formValidator.setFormPattern(formPattern)
+
 // Event: Document Load
 document.addEventListener('DOMContentLoaded', async () => {
 	const result = await http.get(defaultUrl)
@@ -46,11 +48,8 @@ document.querySelector('.insert-site-form').addEventListener('submit', async eve
 	event.preventDefault()
 
 	const formManager = new FormManager(event.target)
-	const { id } = formManager.elements
 
-	const isNewItem = (id == 'null')
-
-	submitingFormValues(formManager, isNewItem)
+	submitingFormValues(formManager)
 
 	event.target.reset()
 	event.target.setAttribute('keyid', null)
@@ -99,15 +98,13 @@ async function doDelete(itemDiv, itemId) {
 	}
 }
 
-async function submitingFormValues(form, isNewItem) {
-
-	formValidator.setFormPattern(formPattern)
-
+async function submitingFormValues(form) {
+	const { id } = form.elements
 	const validaton = formValidator.validateForm(form)
 
 	if (validaton === 'ok') {
 
-		if (isNewItem) {
+		if (!id) {
 			const result = await http.post(defaultUrl, form.elements)
 
 			messager.showSuccess('Added new item!')
