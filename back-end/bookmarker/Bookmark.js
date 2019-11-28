@@ -1,6 +1,6 @@
 const BookmarkerController = require('./BookmarkerController')
 
-class Bookmarker {
+class Bookmark {
 
 	constructor(sitename, siteurl) {
 		this.id = this.generateId()
@@ -11,7 +11,8 @@ class Bookmarker {
 	generateId() {
 		let result = null
 		const bookmarkerController = new BookmarkerController('./files/bookmarkerList.json')
-		const ids = bookmarkerController.getAll().map(({ id }) => id)
+		const allBookmarks = JSON.parse(bookmarkerController.getAll())
+		const ids = allBookmarks.map(bookmark => bookmark.id)
 
 		ids.forEach((elem, index) => {
 			const existId = ids.some(id => {
@@ -27,4 +28,4 @@ class Bookmarker {
 	}
 }
 
-module.exports = Bookmarker
+module.exports = Bookmark

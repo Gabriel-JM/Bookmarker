@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const BookmarkerController = require('./bookmarker/BookmarkerController')
-const Bookmarker = require('./bookmarker/Bookmarker')
+const Bookmark = require('./bookmarker/Bookmark')
 
 const port = process.env.port || 3100
 const bookmarkerController = new BookmarkerController('./files/bookmarkerList.json')
@@ -23,7 +23,7 @@ app.get('/:id', (req, res) => {
 
 app.post('/', (req, res) => {
     const { siteName, siteUrl } = req.body
-    const bookmarker = new Bookmarker(siteName, siteUrl)
+    const bookmarker = new Bookmark(siteName, siteUrl)
 
     res.send(bookmarkerController.postOne(bookmarker))
 })

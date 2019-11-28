@@ -9,53 +9,53 @@ class BookmarkerController {
 	getAll() {
 		const fileContent = fs.readFileSync(this.filePath)
 
-		return JSON.parse(fileContent)
+		return fileContent
 	}
 
 	getOne(id) {
-		const bookmarkers = this.getAll()
+		const bookmarks = JSON.parse(this.getAll())
 
-		const theOne = bookmarkers.find(bookmarker => {
-			return bookmarker.id == id
+		const theOne = bookmarks.find(bookmark => {
+			return bookmark.id == id
 		})
 
-		return theOne || this.returnMessage('Not found!', false)
+		const stringifyOne = JSON.stringify(theOne)
+
+		return stringifyOne || this.returnMessage('Not found!', false)
 	}
 
-	postOne(bookmarker) {
-		const fileContent = this.getAll()
-		let bookMarkerArray = fileContent
+	postOne(bookmark) {
+		const fileContent = JSON.parse(this.getAll())
+		let bookMarkArray = fileContent
 
-		bookMarkerArray = [...bookMarkerArray, bookmarker]
-		const bookMarkers = JSON.stringify(bookMarkerArray)
+		bookMarkArray = [...bookMarkArray, bookmark]
+		const bookMarks = JSON.stringify(bookMarkArray)
 
-		fs.writeFileSync(this.filePath, bookMarkers)
+		fs.writeFileSync(this.filePath, bookMarks)
 
-		return bookmarker
+		return JSON.stringify(bookmark)
 	}
 
-	putOne(bookmarkerToAlter) {
-		const { id, siteName, siteUrl } = bookmarkerToAlter
-		const bookmarkerArray = this.getAll()
+	putOne(bookmarkToAlter) {
+		const { id, siteName, siteUrl } = bookmarkToAlter
+		const bookmarkArray = JSON.parse(this.getAll())
 
-		const bookmarker = bookmarkerArray.find(bookmarker => {
-			return bookmarker.id == id
-		})
+		const bookmark = bookmarkArray.find(bookmark => bookmark.id == id)
 
-		if (bookmarker) {
-			bookmarker.siteName = siteName
-			bookmarker.siteUrl = siteUrl
+		if (bookmark) {
+			bookmark.siteName = siteName
+			bookmark.siteUrl = siteUrl
 
-			return this.rePostAll(bookmarkerArray)
+			return this.rePostAll(bookmarkArray)
 		}
 
 		return this.returnMessage('Id not found!', false)
 	}
 
-	rePostAll(bookmarkersArray) {
-		const bookmarkers = JSON.stringify(bookmarkersArray)
+	rePostAll(bookmarksArray) {
+		const bookmarks = JSON.stringify(bookmarksArray)
 
-		fs.writeFileSync(this.filePath, bookmarkers)
+		fs.writeFileSync(this.filePath, bookmarks)
 
 		return this.getAll()
 	}
@@ -81,10 +81,10 @@ class BookmarkerController {
 	}
 
 	returnMessage(text, approve) {
-		return {
+		return JSON.stringify({
 			message: text,
 			ok: approve
-		}
+		})
 	}
 }
 
