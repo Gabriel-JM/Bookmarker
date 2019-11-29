@@ -36,8 +36,9 @@ export default class FormManager {
   parseUrl() {
     const regex = /[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
     const { siteUrl } = this.elements
+    const urlParsed = siteUrl.match(regex)
 
-    this.elements.siteUrl = siteUrl.match(regex)
+    this.elements.siteUrl = urlParsed ? urlParsed[0] : siteUrl
   }
 
 }

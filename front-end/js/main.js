@@ -9,7 +9,10 @@ import Messager from './UI/Messager.js'
 
 // Constants
 const defaultUrl = 'http://localhost:3100'
-const sitesListDiv = '[sites-list]'
+const sitesListQuery = '[sites-list]'
+const formQuery = '.insert-site-form'
+
+// Objects
 const http = new HttpRequest()
 const formValidator = new FormValidator()
 const mainUI = new MainUI()
@@ -35,16 +38,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 	const result = await http.get(defaultUrl)
 
 	if (result.length) {
-		mainUI.showItems(sitesListDiv, result)
+		mainUI.showItems(sitesListQuery, result)
 
 		addButtonsEvents()
 	} else {
-		mainUI.isSitesListEmpty(sitesListDiv)
+		mainUI.isSitesListEmpty(sitesListQuery)
 	}
 }, true)
 
 // Event: Form submit
-document.querySelector('.insert-site-form').addEventListener('submit', async event => {
+document.querySelector(formQuery).addEventListener('submit', async event => {
 	event.preventDefault()
 
 	const formManager = new FormManager(event.target)
@@ -82,7 +85,7 @@ async function doEdit(itemId) {
 	const theOne = await http.getOne(`${defaultUrl}`, itemId)
 
 	if (theOne && theOne.id) {
-		mainUI.fillInputFields(theOne, '.insert-site-form')
+		mainUI.fillInputFields(theOne, formQuery)
 	} else {
 		mainUI.showError('Item not found!')
 	}
@@ -94,7 +97,7 @@ async function doDelete(itemDiv, itemId) {
 	if (result.ok) {
 		itemDiv.remove()
 		messager.showSuccess(result.message)
-		mainUI.isSitesListEmpty(sitesListDiv)
+		mainUI.isSitesListEmpty(sitesListQuery)
 	}
 }
 
@@ -113,11 +116,11 @@ async function submitingFormValues(form) {
 			const result = await http.put(defaultUrl, form.elements)
 
 			messager.showSuccess('Item edited!')
-			mainUI.showItems(sitesListDiv, result)
+			mainUI.showItems(sitesListQuery, result)
 		}
 
 		addButtonsEvents()
-		mainUI.isSitesListEmpty(sitesListDiv)
+		mainUI.isSitesListEmpty(sitesListQuery)
 	}
 	else {
 		messager.showError(validaton)

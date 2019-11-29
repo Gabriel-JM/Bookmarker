@@ -3,84 +3,55 @@
 export default class HttpRequest {
 
     async get(urlString) {
-        try {
-            const response = await fetch(urlString)
-
-            const data = await response.json()
-
-            return data
-
-        } catch (error) {
-            throw console.log(error)
-        }
+        return this.makeRequest(urlString, 'GET')
     }
 
     async getOne(urlString, id) {
-        try {
-            const response = await fetch(`${urlString}/?id=${id}`)
+        const url = `${urlString}/?id=${id}`
 
-            const data = await response.json()
-
-            return data
-        } catch (error) {
-            throw console.log(error)
-        }
+        return this.makeRequest(url, 'GET')
     }
 
     async post(urlString, bodyContent) {
-        try {
-            const response = await fetch(urlString, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(bodyContent)
-            })
-
-            const data = await response.json()
-
-            return data
-
-        } catch (error) {
-            throw console.log(error)
-        }
+        return this.makeRequest(urlString, 'POST', bodyContent)
     }
 
     async put(urlString, bodyContent) {
-        try {
-            const { id } = bodyContent
-            const response = await fetch(`${urlString}/?id=${id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(bodyContent)
-            })
+        const { id } = bodyContent
+        const url = `${urlString}/?id=${id}`
 
-            const data = await response.json()
-
-            return data
-
-        } catch (error) {
-            throw console.log(error)
-        }
+        return this.makeRequest(url, 'PUT', bodyContent)
     }
 
     async delete(urlString, id) {
+        const url = `${urlString}/?id=${id}`
+
+        return this.makeRequest(url, 'DELETE')
+    }
+
+    async makeRequest(urlString, method, bodyContent = null) {
+
+        const headersConfig = {
+            method,
+            headers: {
+                'Content-Type' : 'application/json'
+            }
+        }
+
+        if(bodyContent) Object.assign(headersConfig, {
+            body: JSON.stringify(bodyContent)
+        })
 
         try {
-            const response = await fetch(`${urlString}/?id=${id}`, {
-                method: 'DELETE'
-            })
+            const response = await fetch(urlString, headersConfig)
 
-            const data = await response.json()
+            const data = response.json()
 
             return data
 
-        } catch (error) {
+        } catch(error) {
             throw console.log(error)
         }
-
     }
 
 }
