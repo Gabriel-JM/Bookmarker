@@ -1,14 +1,17 @@
 "use strict"
 
+// Imports
 import MainUI from '../UI/MainUI.js'
 import Messager from '../UI/Messager.js'
 import HttpRequest from '../HttpRequests/HttpRequest.js'
 import FormValidator from './FormValidator.js'
 
+// Constants
 const defaultUrl = 'http://localhost:3100'
 const sitesListQuery = '[sites-list]'
 const formQuery = '.insert-site-form'
 
+// Objects
 const http = new HttpRequest()
 const mainUI = new MainUI()
 const messager = new Messager()
@@ -31,13 +34,16 @@ formValidator.setFormPattern(formPattern)
 
 export default class FormActions {
 
+    constructor() {
+        this.itemsList = null
+    }
+
     async init() {
         const result = await http.get(defaultUrl)
 
         if (result.length) {
+            this.itemsList = result
             mainUI.showItems(sitesListQuery, result)
-
-            this.addButtonsEvents()
         } else {
             mainUI.isSitesListEmpty(sitesListQuery)
         }

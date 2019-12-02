@@ -1,6 +1,7 @@
 "use strict"
 
 import Messager from "./Messager.js"
+import FormActions from "../Form/FormActions.js"
 
 export default class MainUI {
 
@@ -17,9 +18,13 @@ export default class MainUI {
         containerElement.innerHTML = ''
 
         if (this.itemsArray) {
+            const formActions = new FormActions()
+
             this.itemsArray.forEach(item => {
                 containerElement.appendChild(this.createItemElement(item))
             })
+
+            formActions.addButtonsEvents();
         }
 
     }
@@ -39,7 +44,7 @@ export default class MainUI {
 
         div.innerHTML = `
             <a href="http://${siteUrl}" target="_blank"
-                rel="noopener noreferrer"
+               rel="noopener noreferrer"
             >${siteName}</a>
             <div class="site-description-actions">
                 <button btn-edit >Edit</button>
