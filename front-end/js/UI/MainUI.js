@@ -1,7 +1,6 @@
 "use strict"
 
 import Messager from "./Messager.js"
-import FormActions from "../Form/FormActions.js"
 
 export default class MainUI {
 
@@ -15,16 +14,12 @@ export default class MainUI {
 
         const containerElement = document.querySelector(elementQuery)
 
-        containerElement.innerHTML = ''
+        this.removeList(elementQuery)
 
         if (this.itemsArray) {
-            const formActions = new FormActions()
-
             this.itemsArray.forEach(item => {
                 containerElement.appendChild(this.createItemElement(item))
             })
-
-            formActions.addButtonsEvents();
         }
 
     }
@@ -59,6 +54,10 @@ export default class MainUI {
         const newItem = this.createItemElement(item)
 
         this.showItem(newItem, '[sites-list]')
+    }
+
+    removeList(elementQuery) {
+        document.querySelector(elementQuery).innerHTML = ''
     }
 
     fillInputFields(item, form) {

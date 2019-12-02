@@ -35,15 +35,16 @@ formValidator.setFormPattern(formPattern)
 export default class FormActions {
 
     constructor() {
-        this.itemsList = null
+        this.itemsList = []
     }
 
-    async init() {
+    async update() {
         const result = await http.get(defaultUrl)
 
         if (result.length) {
             this.itemsList = result
             mainUI.showItems(sitesListQuery, result)
+            this.addButtonsEvents()
         } else {
             mainUI.isSitesListEmpty(sitesListQuery)
         }
@@ -87,6 +88,7 @@ export default class FormActions {
             itemDiv.remove()
             messager.showSuccess(result.message)
             mainUI.isSitesListEmpty(sitesListQuery)
+            this.update()
         }
     }
 
@@ -108,11 +110,33 @@ export default class FormActions {
                 mainUI.showItems(sitesListQuery, result)
             }
 
-            this.addButtonsEvents()
+            this.update()
             mainUI.isSitesListEmpty(sitesListQuery)
         }
         else {
             messager.showError(validaton)
+        }
+
+    }
+
+    search(inputValue) {
+
+        const { itemsList } = this
+
+        if(!RegExp(/^\s+$|\s+(?=\s{1,2})/).test(inputValue)) {
+            const result = itemsList.filter(item => {
+                return RegExp(inputValue.toLowerCase()).test(item.siteName.toLowerCase())
+            })
+
+            if(!result.length && inputValue !== '') {
+                mainUI.removeList(sitesListQuery)
+                messager.addNoItemsMessage(sitesListQuery)
+            } else if(inputValue === '') {
+                mainUI.showItems(sitesListQuery, itemsList)
+            } else {
+                mainUI.showItems(sitesListQuery, result)
+                messager.removeNoItemsMessage()
+            }
         }
 
     }
