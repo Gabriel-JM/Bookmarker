@@ -31,6 +31,18 @@ formValidator.setFormPattern(formPattern)
 
 export default class FormActions {
 
+    async init() {
+        const result = await http.get(defaultUrl)
+
+        if (result.length) {
+            mainUI.showItems(sitesListQuery, result)
+
+            this.addButtonsEvents()
+        } else {
+            mainUI.isSitesListEmpty(sitesListQuery)
+        }
+    }
+
     addButtonsEvents() {
         const buttonsTypes = ['delete', 'edit']
 

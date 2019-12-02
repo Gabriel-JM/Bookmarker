@@ -142,13 +142,23 @@ header, section, footer {
 	width: 50%;
 	grid-area: button;
 	justify-self: flex-end;
-	background: #333;
-	border: 0;
+	background: transparent;
+	border: 1px solid #333;
 	border-radius: 4px;
-	color: white;
+	color: #333;
 	font-weight: bold;
 	padding: 6px;
 	cursor: pointer;
+	transition: all 0.3s ease-out;
+}
+
+.insert-site-form > button:hover {
+	background-color: #333;
+	color: white;
+}
+
+.insert-site-form > button::selection {
+	background-color: transparent;
 }
 
 .sites-list-header {
